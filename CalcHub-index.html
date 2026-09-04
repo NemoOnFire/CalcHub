@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CalcHub — Every Calculation. One Place.</title>
+<meta name="description" content="CalcHub is an all-in-one calculator hub for finance, math, health, school, home, auto, business, science, travel and everyday calculations.">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  color:#172033;
+  background:#f7f9fc;
+  line-height:1.5;
+}
+a{text-decoration:none;color:inherit}
+.wrap{width:min(1180px,92%);margin:auto}
+
+/* HEADER */
+header{
+  position:absolute;
+  top:0;left:0;right:0;
+  z-index:10;
+  color:white;
+  background:rgba(7,18,35,.45);
+  backdrop-filter:blur(7px);
+}
+.nav{
+  min-height:78px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:25px;
+}
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-.7px;
+}
+.logo span{color:#27a8ff}
+nav{display:flex;gap:28px;font-weight:700;font-size:15px}
+nav a{opacity:.94}
+nav a:hover{color:#27a8ff}
+
+/* HERO */
+.hero{
+  min-height:560px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  color:white;
+  padding:110px 20px 70px;
+  background:
+    linear-gradient(rgba(7,28,55,.43),rgba(7,28,55,.60)),
+    url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2200&q=85")
+    center/cover no-repeat;
+}
+.hero-inner{width:min(850px,100%)}
+.hero h1{
+  font-size:clamp(42px,6vw,72px);
+  line-height:1.02;
+  letter-spacing:-2.5px;
+  margin-bottom:18px;
+}
+.hero h1 span{color:#1da9ff}
+.hero p{
+  font-size:20px;
+  font-weight:700;
+  margin-bottom:25px;
+}
+.hero .sub{
+  font-size:15px;
+  font-weight:500;
+  opacity:.9;
+  margin-top:-14px;
+  margin-bottom:25px;
+}
+.search{
+  width:min(760px,100%);
+  margin:auto;
+  background:white;
+  border-radius:50px;
+  padding:7px;
+  display:flex;
+  box-shadow:0 12px 35px rgba(0,0,0,.25);
+}
+.search input{
+  flex:1;
+  border:0;
+  outline:0;
+  padding:16px 22px;
+  font-size:16px;
+  border-radius:45px;
+  min-width:0;
+}
+.search button{
+  border:0;
+  border-radius:40px;
+  background:#1599ef;
+  color:white;
+  font-weight:800;
+  padding:0 30px;
+  cursor:pointer;
+}
+.popular{
+  margin-top:16px;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+}
+.popular span{
+  border:1px solid rgba(255,255,255,.55);
+  background:rgba(255,255,255,.12);
+  padding:6px 12px;
+  border-radius:20px;
+  font-size:12px;
+  cursor:pointer;
+}
+
+/* BENEFITS */
+.benefits{
+  background:white;
+  border-bottom:1px solid #e5e9ef;
+}
+.benefit-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+}
+.benefit{
+  padding:25px 18px;
+  text-align:center;
+  border-right:1px solid #edf0f4;
+}
+.benefit:last-child{border-right:0}
+.benefit .icon{font-size:24px;margin-bottom:6px}
+.benefit strong{display:block;font-size:15px}
+.benefit small{display:block;color:#788397;margin-top:2px}
+
+/* CATEGORIES */
+.categories{
+  padding:55px 0 70px;
+}
+.category-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
+}
+.category-card{
+  min-height:245px;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  color:white;
+  display:flex;
+  align-items:flex-end;
+  background:#26364b center/cover no-repeat;
+  box-shadow:0 8px 25px rgba(20,35,55,.12);
+  transition:transform .2s,box-shadow .2s;
+}
+.category-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 30px rgba(20,35,55,.20);
+}
+.category-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(4,12,25,.88),rgba(4,12,25,.05) 72%);
+}
+.card-content{
+  position:relative;
+  z-index:1;
+  padding:25px;
+  width:100%;
+}
+.card-content h2{font-size:25px;margin-bottom:5px}
+.card-content p{font-size:14px;max-width:480px;color:#f1f5f9}
+.card-content .count{
+  display:inline-block;
+  margin-top:12px;
+  font-size:12px;
+  font-weight:800;
+  opacity:.95;
+}
+
+/* category artwork */
+.finance{background-image:url("https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1200&q=85")}
+.math{background-image:url("https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1200&q=85")}
+.fitness{background-image:url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=85")}
+.education{background-image:url("https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=85")}
+.home{background-image:url("https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=1200&q=85")}
+.auto{background-image:url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1200&q=85")}
+.business{background-image:url("https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1200&q=85")}
+.science{background-image:url("https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1200&q=85")}
+.tech{background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=85")}
+.everyday{background-image:url("https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=1200&q=85")}
+.conversion{background-image:url("https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=1200&q=85")}
+.food{background-image:url("https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&w=1200&q=85")}
+.travel{background-image:url("https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=1200&q=85")}
+.sports{background-image:url("https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1200&q=85")}
+.time{background-image:url("https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1200&q=85")}
+
+/* CALORIEPATH CTA */
+.cta{
+  padding:65px 20px;
+  color:white;
+  text-align:center;
+  background:linear-gradient(135deg,#087fce,#164e91);
+}
+.cta h2{font-size:34px;margin-bottom:10px}
+.cta p{opacity:.92;margin-bottom:22px}
+.cta a{
+  display:inline-block;
+  background:white;
+  color:#1266a8;
+  font-weight:900;
+  padding:13px 23px;
+  border-radius:30px;
+}
+
+/* FOOTER */
+footer{
+  background:#101c2b;
+  color:#dbe5f0;
+  padding:42px 0 25px;
+}
+.footer-grid{
+  display:grid;
+  grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:35px;
+}
+footer h3{color:white;margin-bottom:10px}
+footer p,footer a{font-size:13px;color:#aebccd}
+footer a{display:block;margin:6px 0}
+.copyright{
+  border-top:1px solid rgba(255,255,255,.12);
+  margin-top:30px;
+  padding-top:18px;
+  text-align:center;
+  color:#8999aa;
+  font-size:12px;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+  nav{display:none}
+  .hero{min-height:600px}
+  .hero h1{font-size:45px}
+  .hero p{font-size:17px}
+  .search{padding:5px}
+  .search input{padding:14px 14px;font-size:14px}
+  .search button{padding:0 19px}
+  .benefit-grid{grid-template-columns:repeat(2,1fr)}
+  .benefit:nth-child(2){border-right:0}
+  .category-grid{grid-template-columns:1fr;gap:18px}
+  .category-card{min-height:225px}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#">Calc<span>Hub</span></a>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#categories">Calculators</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">About</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <h1>Welcome to <span>CalcHub</span></h1>
+    <p>Search for any calculator you need.</p>
+    <div class="sub">Finance, school, home, auto, health, and more — all in one place.</div>
+
+    <div class="search">
+      <input id="searchBox" type="text" placeholder="Search calculators... (e.g. Roth calculator, mortgage, GPA, etc.)">
+      <button onclick="searchCategories()">Search</button>
+    </div>
+
+    <div class="popular">
+      <span onclick="quickSearch('Roth IRA')">Roth IRA</span>
+      <span onclick="quickSearch('Mortgage')">Mortgage</span>
+      <span onclick="quickSearch('GPA')">GPA</span>
+      <span onclick="quickSearch('Loan')">Loan</span>
+      <span onclick="quickSearch('Percentage')">Percentage</span>
+      <span onclick="quickSearch('BMI')">BMI</span>
+      <span onclick="quickSearch('Days Between')">Days Between</span>
+    </div>
+  </div>
+</section>
+
+<section class="benefits">
+  <div class="wrap benefit-grid">
+    <div class="benefit">
+      <div class="icon">♟</div>
+      <strong>Calculators for Everyone</strong>
+      <small>Useful tools for daily life</small>
+    </div>
+    <div class="benefit">
+      <div class="icon">⚡</div>
+      <strong>Fast & Easy</strong>
+      <small>Find the right tool in seconds</small>
+    </div>
+    <div class="benefit">
+      <div class="icon">◇</div>
+      <strong>100% Free</strong>
+      <small>Always free to use</small>
+    </div>
+    <div class="benefit">
+      <div class="icon">▣</div>
+      <strong>Any Device</strong>
+      <small>Desktop, tablet and mobile</small>
+    </div>
+  </div>
+</section>
+
+<main class="categories" id="categories">
+  <div class="wrap">
+    <div class="category-grid" id="categoryGrid">
+
+      <a class="category-card finance" href="#finance">
+        <div class="card-content">
+          <h2>Finance & Money</h2>
+          <p>Loans, investments, taxes, saving and personal finance.</p>
+          <span class="count">25+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card math" href="#math">
+        <div class="card-content">
+          <h2>Math</h2>
+          <p>Basic, scientific, algebra, geometry and more.</p>
+          <span class="count">20+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card fitness" href="https://caloriepath.co/">
+        <div class="card-content">
+          <h2>Health & Fitness</h2>
+          <p>Calories, BMI, TDEE and more on CaloriePath.</p>
+          <span class="count">Go to CaloriePath →</span>
+        </div>
+      </a>
+
+      <a class="category-card education" href="#education">
+        <div class="card-content">
+          <h2>School & Education</h2>
+          <p>GPA, grades, study planning and academic tools.</p>
+          <span class="count">20+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card home" href="#home">
+        <div class="card-content">
+          <h2>Home & Real Estate</h2>
+          <p>Mortgages, rent, home value and property tools.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card auto" href="#auto">
+        <div class="card-content">
+          <h2>Auto & Transportation</h2>
+          <p>Car loans, fuel costs, mileage and transportation.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card business" href="#business">
+        <div class="card-content">
+          <h2>Business</h2>
+          <p>Profit, margins, payroll and business calculations.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card science" href="#science">
+        <div class="card-content">
+          <h2>Science</h2>
+          <p>Physics, chemistry, biology and scientific calculations.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card tech" href="#technology">
+        <div class="card-content">
+          <h2>Technology</h2>
+          <p>Data, storage, networking and computing tools.</p>
+          <span class="count">10+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card everyday" href="#everyday">
+        <div class="card-content">
+          <h2>Everyday Life</h2>
+          <p>Dates, time, planning and useful everyday calculations.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card conversion" href="#conversions">
+        <div class="card-content">
+          <h2>Conversions</h2>
+          <p>Length, weight, temperature, volume and unit conversions.</p>
+          <span class="count">30+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card food" href="#food">
+        <div class="card-content">
+          <h2>Cooking & Food</h2>
+          <p>Recipe scaling, portions, measurements and kitchen tools.</p>
+          <span class="count">10+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card travel" href="#travel">
+        <div class="card-content">
+          <h2>Travel</h2>
+          <p>Trip planning, fuel, distance and travel calculations.</p>
+          <span class="count">10+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card sports" href="#sports">
+        <div class="card-content">
+          <h2>Sports</h2>
+          <p>Running pace, scores, statistics and sports calculations.</p>
+          <span class="count">10+ calculators →</span>
+        </div>
+      </a>
+
+      <a class="category-card time" href="#time">
+        <div class="card-content">
+          <h2>Time & Date</h2>
+          <p>Time zones, date differences, deadlines and countdowns.</p>
+          <span class="count">15+ calculators →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</main>
+
+<section class="cta" id="resources">
+  <div class="wrap">
+    <h2>Need a calorie calculator?</h2>
+    <p>Check out our dedicated health and fitness calculator hub.</p>
+    <a href="https://caloriepath.co/">Visit CaloriePath →</a>
+  </div>
+</section>
+
+<footer id="about">
+  <div class="wrap footer-grid">
+    <div>
+      <h3>CalcHub</h3>
+      <p>Every calculation. One place.</p>
+      <p style="margin-top:8px">Built for curious minds.</p>
+    </div>
+    <div>
+      <h3>Quick Links</h3>
+      <a href="#">Home</a>
+      <a href="#categories">Calculators</a>
+      <a href="#resources">Resources</a>
+      <a href="#about">About</a>
+    </div>
+    <div>
+      <h3>Popular Calculators</h3>
+      <a href="#finance">Roth IRA</a>
+      <a href="#home">Mortgage</a>
+      <a href="#education">GPA</a>
+      <a href="#finance">Loan</a>
+      <a href="#math">Percentage</a>
+      <a href="https://caloriepath.co/">BMI</a>
+    </div>
+    <div>
+      <h3>Legal</h3>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="wrap copyright">© 2026 CalcHub. All rights reserved.</div>
+</footer>
+
+<script>
+function quickSearch(text){
+  document.getElementById("searchBox").value=text;
+  searchCategories();
+  document.getElementById("categories").scrollIntoView({behavior:"smooth"});
+}
+function searchCategories(){
+  const q=document.getElementById("searchBox").value.toLowerCase().trim();
+  const cards=document.querySelectorAll(".category-card");
+  cards.forEach(card=>{
+    const match=!q || card.innerText.toLowerCase().includes(q);
+    card.style.display=match ? "flex" : "none";
+  });
+}
+document.getElementById("searchBox").addEventListener("keydown",e=>{
+  if(e.key==="Enter") searchCategories();
+});
+</script>
+
+</body>
+</html>
